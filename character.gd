@@ -6,6 +6,7 @@ const MASS = 10.0
 const ARRIVE_DISTANCE = 10.0
 
 export(float) var speed = 200.0
+export(int) var max_move = 8
 var _state = States.IDLE
 
 var _path = []
@@ -52,10 +53,18 @@ func _move_to(world_position):
 
 func _change_state(new_state):
 	if new_state == States.FOLLOW:
+		var _astar_node = get_parent().get_node("TileMap").astar_node
 		_path = get_parent().get_node("TileMap").get_astar_path(position, _target_position)
+		var _point_count = _astar_node.get_point_count()
+		print_debug(_point_count)
+		
 		if not _path or len(_path) == 1:
 			_change_state(States.IDLE)
 			return
+		
+		
+		if _point_count >= max_move:
+			get_parent().get_node("TileMap").clear_previous_path_drawing()
 		# The index 0 is the starting cell.
 		# We don't want the character to move back to it in this example.
 		_target_point_world = _path[1]

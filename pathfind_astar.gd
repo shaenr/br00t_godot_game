@@ -6,8 +6,6 @@ const DRAW_COLOR = Color.white
 # The Tilemap node doesn't have clear bounds so we're defining the map's limits here.
 export(Vector2) var map_size = Vector2.ONE * 16
 
-export(int) var max_distance = 8
-
 # The path start and end variables use setter methods.
 # You can find them at the bottom of the script.
 var path_start_position = Vector2() setget _set_path_start_position
